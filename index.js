@@ -33,10 +33,13 @@ const corsOptions = {
 	app.use(cors(corsOptions));
 // Database Connection
 mongoose.connect(process.env.MONGODB_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB Atlas'))
+.catch((err) => {
+  console.error('MongoDB connection error:', err.message);
 });
-
-mongoose.connection.once('open', () => console.log('Now Connected to MongoDB Atlas.'))
-
 
 if (require.main === module) {
   app.listen(process.env.PORT || 4000, () => {
